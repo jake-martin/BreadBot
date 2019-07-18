@@ -21,7 +21,7 @@ namespace BreadBot
 		[FunctionName("SlackEndpoint")]
 		public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req, ILogger log)
 		{
-			log.LogInformation("Verification Endpoint received a request.");
+			log.LogInformation("Slack Endpoint received a request.");
 			try
 			{
 				var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
@@ -38,28 +38,26 @@ namespace BreadBot
 					return new OkObjectResult(verificationEventModel.Challenge);
 				}
 
-				var eventRequest = JsonConvert.DeserializeObject<EventRequestModel>(requestBody);
-				if (eventRequest.Type == "app_mention")
+				//var eventRequest = JsonConvert.DeserializeObject<EventRequestModel>(requestBody);
+				//if (eventRequest.Type == "app_mention")
+
+				var channelName = Helper.GetEnvironmentVariable("Channel");
+				var message = new PostMessageModel
 				{
-					var message = new PostMessageModel
-					{
-						Text = "Let's get this bread!",
-						Channel = ""
-					};
+					Text = "Let's get this bread!",
+					Channel = channelName
+				};
 
-					var postMessageUrl = Helper.GetEnvironmentVariable("PostMessageUrl");
-					var botToken = Helper.GetEnvironmentVariable("BotToken");
+				var postMessageUrl = Helper.GetEnvironmentVariable("PostMessageUrl");
+				var botToken = Helper.GetEnvironmentVariable("BotToken");
 
-					var content = JsonConvert.SerializeObject(message);
-					using (var client = new HttpClient())
-					{
-						client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", botToken);
-						await client.PostAsync(postMessageUrl, new StringContent(content, Encoding.UTF8, "application/json"));
-					}
-					return new OkResult();
+				var content = JsonConvert.SerializeObject(message);
+				using (var client = new HttpClient())
+				{
+					client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", botToken);
+					await client.PostAsync(postMessageUrl, new StringContent(content, Encoding.UTF8, "application/json"));
 				}
-
-				return new BadRequestResult();
+				return new OkResult();
 
 			}
 			catch (Exception ex)
