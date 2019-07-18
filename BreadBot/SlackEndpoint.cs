@@ -18,6 +18,12 @@ namespace BreadBot
 {
 	public static class SlackEndpoint
 	{
+		//environment variables
+		private const string PostMessageUrl = "PostMessageUrl";
+		private const string BotToken = "BotUserToken";
+		private const string ChannelName = "Channel";
+
+
 		[FunctionName("SlackEndpoint")]
 		public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req, ILogger log)
 		{
@@ -38,27 +44,36 @@ namespace BreadBot
 					return new OkObjectResult(verificationEventModel.Challenge);
 				}
 
-				//var eventRequest = JsonConvert.DeserializeObject<EventRequestModel>(requestBody);
-				//if (eventRequest.Type == "app_mention")
+				//get environment variables
+				var postMessageUrl = Helper.GetEnvironmentVariable(PostMessageUrl);
+				var botToken = Helper.GetEnvironmentVariable(BotToken);
+				var channelName = Helper.GetEnvironmentVariable(ChannelName);
 
-				var channelName = Helper.GetEnvironmentVariable("Channel");
-				var message = new PostMessageModel
+				//deserialize request to a model
+				var eventRequest = JsonConvert.DeserializeObject<EventRequestModel>(requestBody);
+
+				//check if the event request was an app_mention
+				if (eventRequest.Type == "app_mention")
 				{
-					text = "Let's get this bread!",
-					channel = channelName
-				};
+					log.LogInformation("Receieved app mention request type.");
+					var message = new PostMessageModel
+					{
+						text = "Let's get this bread!",
+						channel = channelName
+					};
 
-				var postMessageUrl = Helper.GetEnvironmentVariable("PostMessageUrl");
-				var botToken = Helper.GetEnvironmentVariable("BotUserToken");
-
-				var content = JsonConvert.SerializeObject(message);
-				using (var client = new HttpClient())
-				{
-					client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", botToken);
-					await client.PostAsync(postMessageUrl, new StringContent(content, Encoding.UTF8, "application/json"));
+					var content = JsonConvert.SerializeObject(message);
+					using (var client = new HttpClient())
+					{
+						log.LogInformation("Posting message.");
+						client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", botToken);
+						await client.PostAsync(postMessageUrl, new StringContent(content, Encoding.UTF8, "application/json"));
+					}
+					return new OkResult();
 				}
-				return new OkResult();
 
+				log.LogInformation("Request does not match a valid criteria");
+				return new BadRequestResult();
 			}
 			catch (Exception ex)
 			{
