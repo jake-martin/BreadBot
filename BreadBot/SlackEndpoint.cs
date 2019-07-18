@@ -7,6 +7,9 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 using ILogger = Microsoft.Extensions.Logging.ILogger;
@@ -35,14 +38,33 @@ namespace BreadBot
 					return new OkObjectResult(verificationEventModel.Challenge);
 				}
 
+				var eventRequest = JsonConvert.DeserializeObject<EventRequestModel>(requestBody);
+				if (eventRequest.Type == "app_mention")
+				{
+					var message = new PostMessageModel
+					{
+						Text = "Let's get this bread!",
+						Channel = ""
+					};
 
+					var postMessageUrl = Helper.GetEnvironmentVariable("PostMessageUrl");
+					var botToken = Helper.GetEnvironmentVariable("BotToken");
 
-				return new OkObjectResult("Ok");
+					var content = JsonConvert.SerializeObject(message);
+					using (var client = new HttpClient())
+					{
+						client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", botToken);
+						await client.PostAsync(postMessageUrl, new StringContent(content, Encoding.UTF8, "application/json"));
+					}
+					return new OkResult();
+				}
+
+				return new BadRequestResult();
 
 			}
 			catch (Exception ex)
 			{
-				log.LogError("Failed to verify: " + ex.Message);
+				log.LogError(ex.Message);
 				return new InternalServerErrorResult();
 			}
 		}
