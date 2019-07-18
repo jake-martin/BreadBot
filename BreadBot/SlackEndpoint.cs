@@ -35,7 +35,9 @@ namespace BreadBot
 					return new OkObjectResult(verificationEventModel.Challenge);
 				}
 
-				return new OkObjectResult("Placeholder");
+
+
+				return new OkObjectResult("Ok");
 
 			}
 			catch (Exception ex)
