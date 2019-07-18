@@ -23,17 +23,9 @@ namespace BreadBot
 			{
 				log.LogInformation("Attempting to verify Endpoint");
 
-				//var url = Helper.GetEnvironmentVariable("SlackVerificationUrl");
-
 				var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
 				var verificationEventModel = JsonConvert.DeserializeObject<SlackUrlVerificationEventModel>(requestBody);
-
-				//using (var httpClient = new HttpClient())
-				//{
-				//	var response = await httpClient.PostAsync(url, new StringContent(verificationEventModel.Challenge, Encoding.UTF8, "application/json"));
-				//	response.EnsureSuccessStatusCode();
-				//}
 
 				log.LogInformation("Endpoint Verification sent.");
 
