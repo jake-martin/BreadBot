@@ -1,6 +1,5 @@
 using BreadBot.Models;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
@@ -8,8 +7,6 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.IO;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -26,20 +23,21 @@ namespace BreadBot
 			{
 				log.LogInformation("Attempting to verify Endpoint");
 
-				var url = req.GetEncodedUrl();
+				//var url = Helper.GetEnvironmentVariable("SlackVerificationUrl");
+
 				var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
 				var verificationEventModel = JsonConvert.DeserializeObject<SlackUrlVerificationEventModel>(requestBody);
 
-				using (var httpClient = new HttpClient())
-				{
-					var response = await httpClient.PostAsync(url, new StringContent(verificationEventModel.Challenge, Encoding.UTF8, "application/json"));
-					response.EnsureSuccessStatusCode();
-				}
+				//using (var httpClient = new HttpClient())
+				//{
+				//	var response = await httpClient.PostAsync(url, new StringContent(verificationEventModel.Challenge, Encoding.UTF8, "application/json"));
+				//	response.EnsureSuccessStatusCode();
+				//}
 
 				log.LogInformation("Endpoint Verification sent.");
 
-				return new OkObjectResult("Success");
+				return new OkObjectResult(verificationEventModel.Challenge);
 			}
 			catch (Exception ex)
 			{
