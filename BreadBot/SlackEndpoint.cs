@@ -9,27 +9,35 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Web.Http;
+using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace BreadBot
 {
-	public static class VerificationEndpoint
+	public static class SlackEndpoint
 	{
-		[FunctionName("VerificationEndpoint")]
+		[FunctionName("SlackEndpoint")]
 		public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)] HttpRequest req, ILogger log)
 		{
 			log.LogInformation("Verification Endpoint received a request.");
-
 			try
 			{
-				log.LogInformation("Attempting to verify Endpoint");
-
 				var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
-				var verificationEventModel = JsonConvert.DeserializeObject<SlackUrlVerificationEventModel>(requestBody);
+				//determine if this is a verification challenge request
+				string challenge = req.Query["challenge"];
+				if (challenge != null)
+				{
+					log.LogInformation("Attempting to verify Endpoint");
 
-				log.LogInformation("Endpoint Verification sent.");
+					var verificationEventModel = JsonConvert.DeserializeObject<SlackUrlVerificationEventModel>(requestBody);
 
-				return new OkObjectResult(verificationEventModel.Challenge);
+					log.LogInformation("Endpoint Verification sent.");
+
+					return new OkObjectResult(verificationEventModel.Challenge);
+				}
+
+				return new OkObjectResult("Placeholder");
+
 			}
 			catch (Exception ex)
 			{
