@@ -24,8 +24,7 @@ namespace BreadBot
 				var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
 
 				//determine if this is a verification challenge request
-				string challenge = req.Query["challenge"];
-				if (challenge != null)
+				if (requestBody.Contains("challenge"))
 				{
 					log.LogInformation("Attempting to verify Endpoint");
 
