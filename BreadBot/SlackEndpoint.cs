@@ -44,12 +44,12 @@ namespace BreadBot
 				var channelName = Helper.GetEnvironmentVariable("Channel");
 				var message = new PostMessageModel
 				{
-					Text = "Let's get this bread!",
-					Channel = channelName
+					text = "Let's get this bread!",
+					channel = channelName
 				};
 
 				var postMessageUrl = Helper.GetEnvironmentVariable("PostMessageUrl");
-				var botToken = Helper.GetEnvironmentVariable("BotToken");
+				var botToken = Helper.GetEnvironmentVariable("BotUserToken");
 
 				var content = JsonConvert.SerializeObject(message);
 				using (var client = new HttpClient())

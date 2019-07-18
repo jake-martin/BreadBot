@@ -2,7 +2,7 @@
 {
 	public class PostMessageModel
 	{
-		public string Text { get; set; }
-		public string Channel { get; set; }
+		public string text { get; set; }
+		public string channel { get; set; }
 	}
 }
