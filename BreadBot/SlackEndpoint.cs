@@ -50,30 +50,30 @@ namespace BreadBot
 				var channelName = Helper.GetEnvironmentVariable(ChannelName);
 
 				//deserialize request to a model
-				var eventRequest = JsonConvert.DeserializeObject<EventRequestModel>(requestBody);
+				//var eventRequest = JsonConvert.DeserializeObject<EventRequestModel>(requestBody);
 
 				//check if the event request was an app_mention
-				if (eventRequest.Type == "app_mention")
+				//if (eventRequest.Type == "app_mention")
+				//{
+				log.LogInformation("Receieved app mention request type.");
+				var message = new PostMessageModel
 				{
-					log.LogInformation("Receieved app mention request type.");
-					var message = new PostMessageModel
-					{
-						text = "Let's get this bread!",
-						channel = channelName
-					};
+					text = "Let's get this bread!",
+					channel = channelName
+				};
 
-					var content = JsonConvert.SerializeObject(message);
-					using (var client = new HttpClient())
-					{
-						log.LogInformation("Posting message.");
-						client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", botToken);
-						await client.PostAsync(postMessageUrl, new StringContent(content, Encoding.UTF8, "application/json"));
-					}
-					return new OkResult();
+				var content = JsonConvert.SerializeObject(message);
+				using (var client = new HttpClient())
+				{
+					log.LogInformation("Posting message.");
+					client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", botToken);
+					await client.PostAsync(postMessageUrl, new StringContent(content, Encoding.UTF8, "application/json"));
 				}
+				return new OkResult();
+				//}
 
-				log.LogInformation("Request does not match a valid criteria");
-				return new BadRequestResult();
+				//log.LogInformation("Request does not match a valid criteria");
+				//return new BadRequestResult();
 			}
 			catch (Exception ex)
 			{
