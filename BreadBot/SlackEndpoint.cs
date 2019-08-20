@@ -58,7 +58,8 @@ namespace BreadBot
 				//{
 				log.LogInformation("Receieved app mention request type.");
 
-				var random = new Random().Next(0,9);
+				var random = new Random();
+				var randomPhrase = random.Next(0, 8);
 
 				var botText = new List<string>
 				{
@@ -74,7 +75,7 @@ namespace BreadBot
 
 				var message = new PostMessageModel
 				{
-					text = botText[random],
+					text = botText[randomPhrase],
 					channel = channelName
 				};
 
