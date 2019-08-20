@@ -67,7 +67,7 @@ namespace BreadBot
 					"'There is not a thing that is more positive than bread.' – Fyodor Dostoevsky",
 					"'With bread all sorrows are less' - from Don Quixote",
 					"Rather a piece of bread with a happy heart than wealth with grief. – Egyptian Proverb",
-					"Check before you bite if it is bread or a stone. - Croation Proverb",
+					"Check before you bite if it is bread or a stone. - Croatian Proverb",
 					"Let them eat cake! - Marie Antoinnette",
 					"'The sky is the daily bread of the eyes.' - Ralph Waldo Emerson"
 				};
