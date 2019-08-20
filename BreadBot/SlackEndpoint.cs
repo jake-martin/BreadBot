@@ -6,6 +6,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -56,9 +57,24 @@ namespace BreadBot
 				//if (eventRequest.Type == "app_mention")
 				//{
 				log.LogInformation("Receieved app mention request type.");
+
+				var random = new Random().Next(0,9);
+
+				var botText = new List<string>
+				{
+					"Let's get this bread!",
+					"Let's yeet this wheat.",
+					"'There is not a thing that is more positive than bread.' – Fyodor Dostoevsky",
+					"'With bread all sorrows are less' - from Don Quixote",
+					"Rather a piece of bread with a happy heart than wealth with grief. – Egyptian Proverb",
+					"Check before you bite if it is bread or a stone. - Croation Proverb",
+					"Let them eat cake! - Marie Antoinnette",
+					"'The sky is the daily bread of the eyes.' - Ralph Waldo Emerson"
+				};
+
 				var message = new PostMessageModel
 				{
-					text = "Let's get this bread!",
+					text = botText[random],
 					channel = channelName
 				};
 
