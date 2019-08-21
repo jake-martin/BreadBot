@@ -58,9 +58,6 @@ namespace BreadBot
 				//{
 				log.LogInformation("Receieved app mention request type.");
 
-				var random = new Random();
-				var key = random.Next(0, 11);
-
 				var botText = new Dictionary<int, string>
 				{
 					{0, "Let's get this bread!"},
@@ -73,8 +70,18 @@ namespace BreadBot
 					{7, "The sky is the daily bread of the eyes. - Ralph Waldo Emerson"},
 					{8, "Bread is the king of the table, and all else is merely the court that surrounds the king. - Louis Bromfield"},
 					{9, "Without bread, all is misery. - William Cobbett"},
-					{10, "How do you get a raise at the bread factory? Butter up your boss."}
+					{10, "How do you get a raise at the bread factory? Butter up your boss."},
+					{11, "We gon' keep bakin' to the day we get cake - Kanye West"},
+					{12, "Team! Let's Get that Bread! - Jake R. Martin"},
+					{13, "There's bread and then there's BREAD. Get that bread! - Mark Robustelli" },
+					{14, "Let us obtain the grain."},
+					{15, "Let's go with the dough."},
+					{16, "Let's finagle that bagle." },
+					{17, "What do DevEx and ducks have in common? We both get this bread."}
 				};
+
+				var random = new Random();
+				var key = random.Next(0, botText.Count);
 
 				var message = new PostMessageModel
 				{
