@@ -59,20 +59,21 @@ namespace BreadBot
 				log.LogInformation("Receieved app mention request type.");
 
 				var random = new Random();
-				var key = random.Next(0, 10);
+				var key = random.Next(0, 11);
 
 				var botText = new Dictionary<int, string>
 				{
 					{0, "Let's get this bread!"},
 					{1, "Let's yeet this wheat."},
 					{2, "There is not a thing that is more positive than bread. – Fyodor Dostoevsky"},
-					{3, "With bread all sorrows are less - from Don Quixote"},
+					{3, "With bread, all sorrows are less - from Don Quixote"},
 					{4, "Rather a piece of bread with a happy heart than wealth with grief. – Egyptian Proverb"},
 					{5, "Check before you bite if it is bread or a stone. - Croatian Proverb"},
 					{6, "Let them eat cake! - Marie Antoinnette"},
 					{7, "The sky is the daily bread of the eyes. - Ralph Waldo Emerson"},
 					{8, "Bread is the king of the table, and all else is merely the court that surrounds the king. - Louis Bromfield"},
-					{9, "Without bread all is misery.' - William Cobbett"},
+					{9, "Without bread, all is misery. - William Cobbett"},
+					{10, "How do you get a raise at the bread factory? Butter up your boss."}
 				};
 
 				var message = new PostMessageModel
