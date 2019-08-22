@@ -76,7 +76,7 @@ namespace BreadBot
 					{13, "There's bread and then there's BREAD. Get that bread! - Mark Robustelli" },
 					{14, "Let us obtain the grain."},
 					{15, "Let's go with the dough."},
-					{16, "Let's finagle that bagle." },
+					{16, "Let's finagle that bagel." },
 					{17, "What do DevEx and ducks have in common? We both get this bread."}
 				};
 
