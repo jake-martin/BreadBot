@@ -16,7 +16,7 @@ namespace BreadBot
 		private const string BotToken = "BotUserToken";
 		private const string ChannelName = "Channel";
 
-		[FunctionName("DailyBread")]
+		[FunctionName("VibeCheck")]
 		public static async void RunAsync([TimerTrigger("0 0 9 * * MON-FRI")]TimerInfo myTimer, ILogger log)
 		{
 			log.LogInformation("Firing chron trigger.");
