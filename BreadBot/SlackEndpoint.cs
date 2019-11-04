@@ -73,7 +73,7 @@ namespace BreadBot
 					{10, "How do you get a raise at the bread factory? Butter up your boss."},
 					{11, "We gon' keep bakin' to the day we get cake - Kanye West"},
 					{12, "Team! Let's Get that Bread! - Jake R. Martin"},
-					{13, "There's bread and then there's BREAD. Get that bread! - Mark Robustelli" },
+					{13, "There's bread and then there's BREAD. Get that BREAD! - Mark Robustelli" },
 					{14, "Let us obtain the grain."},
 					{15, "Let's go with the dough."},
 					{16, "Let's finagle that bagel." },

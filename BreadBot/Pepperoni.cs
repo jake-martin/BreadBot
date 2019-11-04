@@ -9,15 +9,15 @@ using System.Text;
 
 namespace BreadBot
 {
-	public static class VibeCheck
+	public static class Pepperoni
 	{
 		//environment variables
 		private const string PostMessageUrl = "PostMessageUrl";
 		private const string BotToken = "BotUserToken";
 		private const string ChannelName = "Channel";
 
-		[FunctionName("VibeCheck")]
-		public static async void RunAsync([TimerTrigger("0 0 17 * * MON-FRI")]TimerInfo myTimer, ILogger log)
+		[FunctionName("Pepperoni")]
+		public static async void RunAsync([TimerTrigger("0 0 21 * * MON-FRI")]TimerInfo myTimer, ILogger log)
 		{
 			log.LogInformation("Firing chron trigger.");
 
@@ -30,7 +30,7 @@ namespace BreadBot
 			{
 				var message = new PostMessageModel
 				{
-					text = "Can I get a vibe check? @here",
+					text = ":thats_a_lotta_pepperoni: :thats_a_lotta_pepperoni: :thats_a_lotta_pepperoni:",
 					channel = channelName
 				};
 

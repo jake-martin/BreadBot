@@ -17,7 +17,7 @@ namespace BreadBot
 		private const string ChannelName = "Channel";
 
 		[FunctionName("DailyBread")]
-		public static async void RunAsync([TimerTrigger("0 0 9 * * MON-FRI")]TimerInfo myTimer, ILogger log)
+		public static async void RunAsync([TimerTrigger("0 0 11 * * MON-FRI")]TimerInfo myTimer, ILogger log)
 		{
 			log.LogInformation("Firing chron trigger.");
 
